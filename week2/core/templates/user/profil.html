@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{% block title %}PROFIL{% endblock %}
+
+{%block content%}
+<div class="container">
+    <div class="">
+        <div class="">
+            <img class="" src="{{ user.profile.image.url }}" />
+            <div class="">
+                <h2 class="">{{ user.username }}</h2>
+                <p class="">{{ user.email }}</p>
+            </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="">
+                <legend class="">Info</legend>
+                <div class="user__wrap">
+                    {% for field in user_form %}
+                    {{field.label}}
+                    {{field}}
+                {% endfor %}
+                </div>
+                <div class="profil__wrap">
+                    {% for field1 in profile_form %}
+                        {{field1.label}}
+                        {{field1}}
+                    {% endfor %}
+                </div>
+            </fieldset>
+            <div class="">
+                <button class="" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+{%endblock%}

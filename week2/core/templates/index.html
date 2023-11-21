@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}HOME{% endblock %}
+
+{% block content %}
+{% for catalog_request in catalog_requests %}
+<div class="container">
+	<article class="media content-section">
+		<img class="rounded-circle article-img" src="{{ catalog_request.author.profile.image.url }}">
+		<div class="media-body">
+			<div class="article-metadata">
+				<a class="mr-2" href="{% url 'user_catalog_requests' catalog_request.author.username %}">{{catalog_request.author }}</a>
+				<small class="text-muted">{{ catalog_request.date_posted|date:"F d, Y" }}</small>
+			</div>
+			<h2>
+				<a class="article-title" href="{% url 'catalog_request_detail' catalog_request.id %}">{{ catalog_request.title}}</a>
+			</h2>
+			<p class="article-content">{{ catalog_request.content }}</p>
+		</div>
+	</article>
+</div>
+{% endfor %}
+{% endblock content %}

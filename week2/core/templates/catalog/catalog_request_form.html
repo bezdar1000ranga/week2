@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-section">
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<fieldset class="form-group">
+			<legend class="border-bottom mb-4">
+				{% if action == "edit" %}Редактирование заявки{% else %}Создание заявки{% endif %}
+			</legend>
+			<div class="catalog__wrap">
+                {% for field in form %} 
+                <div class="catalog__item">
+                    {{field.label}}
+                    {{field}}
+                </div>
+                <br>
+                {% endfor %}
+            </div>
+		</fieldset>
+		<div class="form-group">
+			<button class="btn btn-outline-info" type="submit">
+				{% if action == "edit" %}
+				Сохранить
+				{% else %}
+				Создать
+				{%endif %}
+			</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

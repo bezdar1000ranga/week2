@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if catalog_request_count %}
+<h5>Кол-во заявок принятых в работу: {{ catalog_request_count }}</h5>
+<hr />
+{% endif %}
+
+
+
+{% if page != 'index' %}
+<div class="container">
+    <div class="form-group">
+        <form method="GET">
+            <label for="exampleFormControlSelect1">Фильтровать по статусу:</label>
+            <div class="d-flex">
+                <select name="status" class="form-control" id="exampleFormControlSelect1">
+                    <option {% if status == "new" %} selected {% endif %} name="new" value="new">Новая</option>
+                    <option {% if status == "in_progress" %} selected {% endif %} name="in_progress" value="in_progress">В работе</option>
+                    <option {% if status == "completed" %} selected {% endif %} name="completed" value="completed">Выполнено</option>
+                </select>
+                <button type="submit" class="btn btn-primary ml-3">Применить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% if len_catalog_request == 0 %}
+<h2>Нет выполненных заявок</h2>
+{% endif %}
+
+{% for catalog_request in catalog_requests %}
+<div class="container">
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ catalog_request.user.profile.image.url }}" />
+        <div class="media-body">
+            <div class="article-metadata">
+                {% if user.is_superuser %}
+                <a class="mr-2" href="{% url 'catalog_request_list' %}">{{ catalog_request.user.username }}</a>
+                {% else %}
+                <a class="mr-2" href="{% url 'catalog_request_list'  %}">{{ catalog_request.user.username }}</a>
+                {% endif %}
+    
+                <small class="text-muted">{{ catalog_request.created_at }}</small>
+                <small class="text-muted">{{ catalog_request.category }}</small>
+                <small class="text-muted">
+                    {% if catalog_request.status == 'new' %} Новая {% endif %}
+                    {% if catalog_request.status == 'in_progress' %}Принято в работу {% endif %}
+                    {% if catalog_request.status == 'completed' %} Выполнено {% endif %}
+                </small>
+            </div>
+            <h2>
+                <a class="article-title" href="{% url 'catalog_request_detail' catalog_request.id %}">{{ catalog_request.title}}</a>
+            </h2>
+            <p class="article-content">{{ catalog_request.content }}</p>
+        </div>
+    </article>
+</div>
+{% endfor %}
+{% endblock %}

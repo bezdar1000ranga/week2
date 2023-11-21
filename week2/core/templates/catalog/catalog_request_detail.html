@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<article class="media content-section">
+	<img class="rounded-circle article-img" src="{{ catalog_request.user.profile.image.url }}" />
+	<div class="media-body">
+		<div class="article-metadata">
+			<a class="mr-2" href="{% url 'catalog_request_list' %}">{{ catalog_request.user.username }}</a>
+			<small class="text-muted">{{ catalog_request.created_at }}</small>
+			<small class="text-muted">{{ catalog_request.category }}</small>
+			<small class="text-muted">
+				{% if catalog_request.status == 'new' %} Новая {% endif %}
+				{% if catalog_request.status == 'in_progress' %} Принято в работу {% endif %}
+				{% if catalog_request.status == 'completed' %} Выполнено {% endif %}
+			</small>
+			{% if catalog_request.status == 'new' or user.is_superuser and catalog_request.status != 'completed' %}
+			<div>
+				<a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'catalog_request_edit' catalog_request.id %}">Изменить</a>
+				<a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'catalog_request_delete' catalog_request.id %}">Удалить</a>
+			</div>
+			{% endif %}
+		</div>
+		<small>Название</small>
+		<h2 class="article-title">{{ catalog_request.title }}</h2>
+		<hr />
+
+		<small class="mb-3 d-block">Фото до работы</small>
+		<img class="w-100" src="{{ catalog_request.image.url }}" />
+		<hr />
+
+		{% if catalog_request.image_after %}
+		<small>Фото после работы</small>
+		<img class="w-100" src="{{ catalog_request.image_after.url }}" />
+		<hr />
+		{% endif %}
+
+		<small>Содержание</small>
+		<p class="article-content">{{ catalog_request.content }}</p>
+		<hr />
+
+		{% if catalog_request.comment %}
+		<small>Комментарий</small>
+		<p class="article-content">{{ catalog_request.comment }}</p>
+		{% endif %}
+	</div>
+</article>
+{% endblock %}

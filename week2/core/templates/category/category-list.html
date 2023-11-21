@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}CATEGORY LIST{% endblock %}
+
+{% block content %}
+  {% for category in categories %}
+    <div class="container">
+      <article class="list__main">
+        <div class="media-body">
+          <h4>
+              <a class="" href="{% url 'category-detail' category.id %}">{{ category.title }}</a>
+          </h4>
+        </div>
+      </article>
+    </div>
+  {% endfor %}
+{% endblock %}

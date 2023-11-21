@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{% block title %}CATALOG DETAIL{% endblock %}
+{% block content %}
+<div class="container">
+    <article class="">
+        <div class="">
+            <div class="">
+                <h2>{{ category.title }}</h2>
+                <div>
+                    <a class="" href="{% url 'category-edit' category.id %}">Изменить</a>
+                    <a class="" href="{% url 'category-delete' category.id %}">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}REGISTER{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST">
+        <div class="wrap2">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="true">{{field.label}}</div>
+            <div class="true">{{field}}</div>
+            {% endfor %}
+            <input type="submit" name="Create User">
+        </div>
+    </form>
+</div>
+{% endblock %}
